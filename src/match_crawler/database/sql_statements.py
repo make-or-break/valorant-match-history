@@ -55,6 +55,13 @@ def get_tracked_users(session=db.open_session()):
     return session.query(db.User).filter(db.User.tracked == True).all()
 
 
+def get_tracked_status(puuid, session=db.open_session()):
+    """
+    Get the tracking status of a user from the DB.
+    """
+    return session.query(db.User).filter(db.User.puuid == puuid).first().tracked
+
+
 def get_user_by_puuid(puuid, session=db.open_session()):
     """
     Get user by puuid
