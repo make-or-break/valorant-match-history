@@ -1,3 +1,4 @@
+import datetime
 import time
 
 from .database import sql_statements as db
@@ -59,11 +60,37 @@ def get_elo_over_time(puuid, n):
     return get_elo_over_matches(puuid, matches_within_time(puuid, n))
 
 
+def get_match_history(puuid, n):
+    """
+    Get the match history over n days
+    """
+
+    matches = matches_within_time(puuid, 1)
+
+    output_string = ""
+
+    for i in range(1, matches + 1):
+        match = get_match_last(puuid, i)
+
+        time = str(
+            datetime.datetime.utcfromtimestamp(int(match.match_start)).strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )
+        )
+
+        output_string = output_string + str(time)
+        output_string = output_string + " - elo: " + match.match_mmr_change
+        output_string = output_string + " = " + str(match.match_elo)
+        output_string = output_string + "\n"
+
+    return output_string
+
+
 if __name__ == "__main__":
     """
     for testing this module isolated
     """
 
     puuid = "d515e2d5-b50e-5c77-a79e-eeb46dbe488a"
-    # get elo diff last 2 days
-    print(get_elo_over_time(puuid, 1))
+    # print matches within last 1 day
+    print(get_match_history(puuid, 1))
