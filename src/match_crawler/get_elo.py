@@ -1,6 +1,6 @@
 import time
 
-from match_crawler.database import sql_statements as db
+from .database import sql_statements as db
 
 
 def get_match_last(puuid, n):
