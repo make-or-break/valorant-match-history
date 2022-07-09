@@ -55,6 +55,13 @@ def get_tracked_users(session=db.open_session()):
     return session.query(db.User).filter(db.User.tracked == True).all()
 
 
+def get_user_by_puuid(puuid, session=db.open_session()):
+    """
+    Get user by puuid
+    """
+    return session.query(db.User).filter(db.User.puuid == puuid).first()
+
+
 #############################################################################################
 # Match handling
 #############################################################################################
