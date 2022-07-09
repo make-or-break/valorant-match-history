@@ -121,3 +121,23 @@ def add_match(puuid, match_id, mmr_data, session=db.open_session()):
 
     session.add(entry)
     session.commit()
+
+
+def get_matches_by_puuid(puuid, session=db.open_session()):
+    """
+    Get all matches of a user from the DB.
+    """
+    return session.query(db.Match).filter(db.Match.puuid == puuid).all()
+
+
+def get_matches_by_puuid_last(puuid, n, session=db.open_session()):
+    """
+    Get all matches of a user from the DB.
+    """
+    return (
+        session.query(db.Match)
+        .filter(db.Match.puuid == puuid)
+        .order_by(db.Match.match_start.desc())
+        .limit(n)
+        .all()
+    )
