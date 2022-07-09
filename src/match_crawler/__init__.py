@@ -8,4 +8,5 @@ from .database.sql_statements import update_tracking
 from .database.sql_statements import user_exists
 from .get_elo import get_elo_over_matches
 from .get_elo import get_elo_over_time
+from .get_elo import matches_within_time
 from .main import check_new_matches
