@@ -6,5 +6,6 @@ from .database.sql_statements import get_tracked_users
 from .database.sql_statements import get_user_by_puuid
 from .database.sql_statements import update_tracking
 from .database.sql_statements import user_exists
-from .get_elo import *
+from .get_elo import get_elo_over_matches
+from .get_elo import get_elo_over_time
 from .main import check_new_matches
