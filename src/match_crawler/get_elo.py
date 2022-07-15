@@ -46,9 +46,11 @@ def matches_within_time(puuid, n):
 
     matches = 0
 
-    while time.time() - int(get_match_date(puuid, matches + 1)) < seconds:
-        matches += 1
+    # add difference between timezone and utc to utc time
+    now = time.time() + datetime.datetime.now().astimezone().utcoffset().seconds
 
+    while (now - int(get_match_date(puuid, matches + 1))) < seconds:
+        matches += 1
     return matches
 
 
