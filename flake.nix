@@ -55,7 +55,7 @@
             systemd.timers.valorant-match-history = {
               wantedBy = [ "timers.target" ];
               partOf = [ "valorant-match-history.service" ];
-              timerConfig.OnCalendar = "*-*-* *:00:00";
+              timerConfig.OnCalendar = "*:0/15";
             };
 
             systemd.services.valorant-match-history = {
