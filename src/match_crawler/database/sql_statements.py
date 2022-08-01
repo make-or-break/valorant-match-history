@@ -92,40 +92,37 @@ def add_match(puuid, match_id, mmr_data, session=db.open_session()):
     """
 
     # get match stats
-    if (match_stats := valorant.get_match_json(match_id)) is not None:
-
-        entry = db.Match(
-            puuid=puuid,
-            match_id=match_id,
-            match_start=valorant.get_game_start(match_stats),
-            match_length=valorant.get_game_length(match_stats),
-            match_rounds=valorant.get_rounds_played(match_stats),
-            match_mmr_change=valorant.get_mmr_change(
-                mmr_data, valorant.get_game_start(match_stats)
-            ),
-            match_elo=valorant.get_mmr_elo(
-                mmr_data, valorant.get_game_start(match_stats)
-            ),
-            match_map=valorant.get_map(match_stats),
-        )
-
-        print(
-            f"Add match to database!\n",
-            f"puuid: {puuid}\n",
-            f"match_id: {match_id}\n",
-            f"match_start: {valorant.get_game_start(match_stats)}\n",
-            f"match_length: {valorant.get_game_length(match_stats)}\n",
-            f"match_rounds: {valorant.get_rounds_played(match_stats)}\n",
-            f"match_mmr_change: {valorant.get_mmr_change(mmr_data, valorant.get_game_start(match_stats))}\n",
-            f"match_elo: {valorant.get_mmr_elo(mmr_data, valorant.get_game_start(match_stats))}\n",
-            f"match_map: {valorant.get_map(match_stats)}\n",
-        )
-
-        session.add(entry)
-        session.commit()
-
-    else:
+    if (match_stats := valorant.get_match_json(match_id)) is None:
         print(f"Could not get match stats for match {match_id}")
+        return
+
+    entry = db.Match(
+        puuid=puuid,
+        match_id=match_id,
+        match_start=valorant.get_game_start(match_stats),
+        match_length=valorant.get_game_length(match_stats),
+        match_rounds=valorant.get_rounds_played(match_stats),
+        match_mmr_change=valorant.get_mmr_change(
+            mmr_data, valorant.get_game_start(match_stats)
+        ),
+        match_elo=valorant.get_mmr_elo(mmr_data, valorant.get_game_start(match_stats)),
+        match_map=valorant.get_map(match_stats),
+    )
+
+    print(
+        f"Add match to database!\n",
+        f"puuid: {puuid}\n",
+        f"match_id: {match_id}\n",
+        f"match_start: {valorant.get_game_start(match_stats)}\n",
+        f"match_length: {valorant.get_game_length(match_stats)}\n",
+        f"match_rounds: {valorant.get_rounds_played(match_stats)}\n",
+        f"match_mmr_change: {valorant.get_mmr_change(mmr_data, valorant.get_game_start(match_stats))}\n",
+        f"match_elo: {valorant.get_mmr_elo(mmr_data, valorant.get_game_start(match_stats))}\n",
+        f"match_map: {valorant.get_map(match_stats)}\n",
+    )
+
+    session.add(entry)
+    session.commit()
 
 
 def get_matches_by_puuid(puuid, session=db.open_session()):
