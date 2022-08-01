@@ -9,29 +9,32 @@ def matches_by_puuid(puuid):
     """
 
     # get last 5 matches of a player
-    player_matches = valorant.get_matches_json_by_puuid(puuid)
+    if (player_matches := valorant.get_matches_json_by_puuid(puuid)) is not None:
 
-    mmr_data = []
+        mmr_data = []
 
-    # iterate through the matches
-    for match in valorant.get_match_ids(player_matches):
+        # iterate through the matches
+        for match in valorant.get_match_ids(player_matches):
 
-        # check if match exists in DB
-        if db.match_exists(puuid, match):
-            # match already exists in DB -> do nothing
-            pass
+            # check if match exists in DB
+            if db.match_exists(puuid, match):
+                # match already exists in DB -> do nothing
+                pass
 
-        else:
-            # we request it here, so we only have to request it when a new match is found
-            if mmr_data == []:
-                # get mmr data for player
-                mmr_data = valorant.get_mmr_json(puuid)
+            else:
+                # we request it here, so we only have to request it when a new match is found
+                if mmr_data == []:
+                    # get mmr data for player
+                    mmr_data = valorant.get_mmr_json(puuid)
 
-            # match is new to DB -> add it
-            db.add_match(puuid, match, mmr_data)
+                # match is new to DB -> add it
+                db.add_match(puuid, match, mmr_data)
 
-    if mmr_data == []:
-        print("No new matches found for player: " + puuid)
+        if mmr_data == []:
+            print("No new matches found for player: " + puuid)
+
+    else:
+        print("Could not get matches for player: " + puuid)
 
 
 def check_new_matches():
