@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy import update
 
 from ..database import sql_scheme as db
+from ..log_setup import logger
 
 
 #############################################################################################
@@ -16,13 +17,13 @@ def add_user(puuid, tracked, session=db.open_session()):
     """
 
     if user_exists(puuid, session):
-        print(f"User {puuid} already exists in DB!")
+        logger.info(f"User {puuid} already exists in DB!")
         pass
     else:
         entry = db.User(puuid=puuid, tracked=tracked)
         session.add(entry)
         session.commit()
-        print(f"Added user to database: {puuid} - {tracked}")
+        logger.info(f"Added user to database: {puuid} - {tracked}")
 
 
 def update_tracking(puuid, tracked, session=db.open_session()):
@@ -35,7 +36,7 @@ def update_tracking(puuid, tracked, session=db.open_session()):
         entry = session.query(db.User).filter(db.User.puuid == puuid).first()
         entry.tracked = tracked
         session.commit()
-        print(f"Updated tracking status of user {puuid} to {tracked}")
+        logger.info(f"Updated tracking status of user {puuid} to {tracked}")
     else:
         add_user(puuid, tracked)
         pass
@@ -93,7 +94,7 @@ def add_match(puuid, match_id, mmr_data, session=db.open_session()):
 
     # get match stats
     if (match_stats := valorant.get_match_json(match_id)) is None:
-        print(f"Could not get match stats for match {match_id}")
+        logger.info(f"Could not get match stats for match {match_id}")
         return
 
     entry = db.Match(
@@ -109,7 +110,7 @@ def add_match(puuid, match_id, mmr_data, session=db.open_session()):
         match_map=valorant.get_map(match_stats),
     )
 
-    print(
+    logger.info(
         f"Add match to database!\n",
         f"puuid: {puuid}\n",
         f"match_id: {match_id}\n",

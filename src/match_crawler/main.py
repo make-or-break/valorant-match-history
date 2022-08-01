@@ -1,6 +1,7 @@
 import valorant
 
 from .database import sql_statements as db
+from .log_setup import logger
 
 
 def matches_by_puuid(puuid):
@@ -11,7 +12,7 @@ def matches_by_puuid(puuid):
     # get last 5 matches of a player
     # if API call fails, skip player
     if (player_matches := valorant.get_matches_json_by_puuid(puuid)) is None:
-        print("Could not get matches for player: " + puuid)
+        logger.info("Could not get matches for player: " + puuid)
         return
 
     mmr_data = []
@@ -34,7 +35,7 @@ def matches_by_puuid(puuid):
             db.add_match(puuid, match, mmr_data)
 
     if mmr_data == []:
-        print("No new matches found for player: " + puuid)
+        logger.info("No new matches found for player: " + puuid)
 
 
 def check_new_matches():
