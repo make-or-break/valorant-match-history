@@ -3,4 +3,4 @@ pre-commit ~= 2.19.0
 pycodestyle ~= 2.8.0
 setuptools ~= 60.2.0
 sqlalchemy ~= 1.4.37
-valorant-utils @ git+https://github.com/make-or-break/valorant-utils#926559f
+valorant-utils @ git+https://github.com/make-or-break/valorant-utils#f2e7117
