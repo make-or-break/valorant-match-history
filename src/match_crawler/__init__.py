@@ -10,5 +10,6 @@ from .get_elo import get_elo_over_matches
 from .get_elo import get_elo_over_time
 from .get_elo import get_match_date
 from .get_elo import get_match_history
+from .get_elo import get_match_last
 from .get_elo import matches_within_time
 from .main import check_new_matches
