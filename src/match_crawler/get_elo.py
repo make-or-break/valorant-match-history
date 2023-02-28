@@ -36,6 +36,24 @@ def get_elo_over_matches(puuid, n):
     return get_match_elo(puuid, 1) - get_match_elo(puuid, n + 1)
 
 
+def get_wins_losses(puuid, n):
+    """
+    Get the number of wins and looses over n matches
+    """
+
+    wins = 0
+    looses = 0
+
+    for i in range(1, n + 1):
+        match = get_match_last(puuid, i)
+        if int(match.match_mmr_change) > 0:
+            wins += 1
+        else:
+            looses += 1
+
+    return wins, looses
+
+
 def matches_within_time(puuid, n):
     """
     Find the number of matches within a timespan!
