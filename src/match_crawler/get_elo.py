@@ -103,6 +103,33 @@ def get_match_history(puuid, n):
     return output_string
 
 
+def get_highest_elo_match(puuid):
+    """
+    Get the highest ELO match of a player
+    """
+
+    # get all matches
+    matches = db.get_matches_by_puuid(puuid)
+
+    i = 0
+    # get first match with elo
+    while matches[i].match_elo is None:
+        i += 1
+    # set best match to first match with elo
+    best_match = matches[i]
+
+    # get match with highest elo
+    for match in matches:
+        # make sure match has elo
+        if match.match_elo is not None:
+            # check if match has higher elo
+            if match.match_elo > best_match.match_elo:
+                best_match = match
+
+    # return match with highest elo
+    return best_match
+
+
 if __name__ == "__main__":
     """
     for testing this module isolated
