@@ -39,6 +39,16 @@ def get_elo_over_matches(puuid, n):
     return get_match_elo(puuid, 1) - get_match_elo(puuid, n + 1)
 
 
+def get_end_of_match(match):
+    """
+    Get the end of a match
+    """
+
+    end_match = int(match.match_start) + (int(match.match_length) / 60000)
+
+    return time.mktime(datetime.datetime.fromtimestamp(end_match).timetuple())
+
+
 def get_wins_losses(puuid, n):
     """
     Get the number of wins and looses over n matches
