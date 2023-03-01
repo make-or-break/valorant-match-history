@@ -1,6 +1,9 @@
 import datetime
 import time
 
+from valorant import current_season
+from valorant import data
+
 from .database import sql_statements as db
 
 
@@ -127,6 +130,38 @@ def get_highest_elo_match(puuid):
                 best_match = match
 
     # return match with highest elo
+    return best_match
+
+
+def get_highest_elo_match_season(puuid):
+    """
+    Get the highest ELO match of a player during the current season
+    """
+
+    season = data.COMPETETIVE_SEASONS[current_season()[0]]
+    start = time.mktime(time.strptime(season["start"], "%Y-%m-%dT%H:%M:%SZ"))
+
+    # get all matches
+    matches = db.get_matches_by_puuid(puuid)
+
+    # find the index of the first match of the season with elo
+    i = 0
+    while int(matches[i].match_start) < start or matches[i].match_elo is None:
+        i += 1
+
+    # set best match to first match of the season
+    best_match = matches[i]
+
+    # get match with highest elo of the season
+    for match in matches:
+        # make sure match has elo
+        if match.match_elo is not None:
+            # check if match is in season
+            if int(match.match_start) > start:
+                # check if match has higher elo
+                if match.match_elo > best_match.match_elo:
+                    best_match = match
+
     return best_match
 
 

@@ -8,8 +8,9 @@ from .database.sql_statements import update_tracking
 from .database.sql_statements import user_exists
 from .get_elo import get_elo_over_matches
 from .get_elo import get_elo_over_time
-from .get_elo import get_match_date
 from .get_elo import get_highest_elo_match
+from .get_elo import get_highest_elo_match_season
+from .get_elo import get_match_date
 from .get_elo import get_match_history
 from .get_elo import get_match_last
 from .get_elo import get_wins_losses
