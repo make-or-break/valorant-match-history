@@ -44,7 +44,7 @@ def get_end_of_match(match):
     Get the end of a match
     """
 
-    end_match = int(match.match_start) + (int(match.match_length) / 60000)
+    end_match = int(match.match_start) + (int(match.match_length) / 1000)
 
     return time.mktime(datetime.datetime.fromtimestamp(end_match).timetuple())
 
