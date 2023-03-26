@@ -1,5 +1,5 @@
 black ~= 22.6.0
-pre-commit ~= 2.19.0
+pre-commit ~= 3.2.1
 pycodestyle ~= 2.8.0
 setuptools ~= 60.2.0
 sqlalchemy ~= 1.4.37
