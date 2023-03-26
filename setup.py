@@ -37,7 +37,7 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
         "Typing :: Typed",
     ],
-    install_requires=["sqlalchemy ~= 1.4.37"],
+    install_requires=["sqlalchemy >= 1.4.37,< 2.1.0"],
     package_dir={"": "src/"},
     packages=find_packages(where="src/"),
     entry_points={
