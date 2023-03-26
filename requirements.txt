@@ -1,4 +1,4 @@
-black ~= 22.6.0
+black ~= 23.1.0
 pre-commit ~= 3.2.1
 pycodestyle ~= 2.8.0
 setuptools ~= 67.6.0
