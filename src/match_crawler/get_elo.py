@@ -36,6 +36,9 @@ def get_elo_over_matches(puuid, n):
     Get the ELO diff over n matches
     """
 
+    if n == len(db.get_matches_by_puuid(puuid)):
+        n = n - 1
+
     return get_match_elo(puuid, 1) - get_match_elo(puuid, n + 1)
 
 
