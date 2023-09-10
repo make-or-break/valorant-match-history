@@ -76,9 +76,12 @@ def matches_within_time(puuid, n):
     seconds = n * 24 * 60 * 60
 
     matches = 0
+    max_matches = len(db.get_matches_by_puuid(puuid))
 
     while (time.time() - int(get_match_date(puuid, matches + 1))) < seconds:
         matches += 1
+        if matches == max_matches:
+            return matches
     return matches
 
 
