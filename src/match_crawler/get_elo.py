@@ -60,7 +60,12 @@ def get_wins_losses(puuid, n):
     wins = 0
     looses = 0
 
+    from .log_setup import logger
+
     for i in range(1, n + 1):
+        # debug output
+        logger.info("get_wins_losses: " + str(i))
+
         match = get_match_last(puuid, i)
         if int(match.match_mmr_change) > 0:
             wins += 1
